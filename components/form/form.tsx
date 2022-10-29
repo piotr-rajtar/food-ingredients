@@ -1,3 +1,5 @@
+import { Button, Input } from '@chakra-ui/react'
+
 import styles from './form.module.scss'
 
 export default function Form() {
@@ -7,9 +9,19 @@ export default function Form() {
       <form>
         <label>
           Ingredient:
-          <input type="text" name="name" />
-          <button type='submit'>Search</button>
+          <Input 
+            name='ingredient'
+            placeholder='Write down ingredient' 
+            size='lg'
+            type='text'
+          />
         </label>
+          <Button 
+            size='lg'
+            type='submit'
+          >
+            Search
+          </Button>
       </form>
     </section>
   )
