@@ -1,12 +1,35 @@
+import React from "react"
 import Head from 'next/head'
 
 import styles from '../styles/Home.module.scss'
+import {  SearchHistoryRecord, SubmitFormFunction } from '../typings'
 
 import CardsList from '../components/cards/cardsList'
 import Form from '../components/form/form'
 import SearchHistoryList from '../components/searchHistory/searchHistoryList'
 
 export default function Home() {
+  const [searchHistoryList, setSearchHistoryList] = React.useState([] as SearchHistoryRecord[]);
+
+  const addNewSearchHistoryItem = (ingredient: string): void => {
+    const newSearchItem: SearchHistoryRecord = {
+      id: searchHistoryList.length,
+      searchedPhrase: ingredient,
+    }
+    const newSearchHistoryList: SearchHistoryRecord[] = [
+      ...structuredClone(searchHistoryList),
+      newSearchItem
+    ]
+    setSearchHistoryList(newSearchHistoryList);
+  }
+
+  const submitForm: SubmitFormFunction = (ingredient: string): void => {
+    //TODO: API REQUEST
+    //TODO: CREATE AND MEMOIZE QUERY STRING
+    //TODO: CORRECT SEARCH ITEM INTERFACE
+    addNewSearchHistoryItem(ingredient);
+  };
+  
   return (
     <div className={styles.container}>
       <Head>
@@ -20,9 +43,9 @@ export default function Home() {
           Welcome to Food Ingredient Explorer!
         </h1>
 
-        <Form />
+        <Form submitForm={submitForm} />
 
-        <SearchHistoryList />
+        <SearchHistoryList searchHistoryList={searchHistoryList} />
 
         <CardsList />
       </main>
