@@ -1,9 +1,14 @@
-import { ListItem } from '@chakra-ui/react'
+import { ListItem } from '@chakra-ui/react';
 
-import styles from './searchHistoryItem.module.scss'
+import styles from './searchHistoryItem.module.scss';
 
-export default function SearchHistoryItem({ children } : { children: React.ReactNode }) {
+interface SearchHistoryItemProps {
+  children: React.ReactNode;
+  onItemClick: (ingredient: string) => Promise<void>;
+}
+
+export default function SearchHistoryItem({ children, onItemClick } : SearchHistoryItemProps) {
   return (
-    <ListItem>{ children }</ListItem>
+    <ListItem onClick={_event => onItemClick(children as string)}>{ children }</ListItem>
   )
 }

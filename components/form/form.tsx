@@ -1,11 +1,15 @@
-import React from "react"
-import { Button, Input } from '@chakra-ui/react'
+import React from 'react';
+import { Button, Input } from '@chakra-ui/react';
 
-import styles from './form.module.scss'
-import { SubmitFormFunction } from "../../typings";
+import styles from './form.module.scss';
+import { SubmitFormFunction } from '../../typings';
 
-export default function Form({ submitForm } : {submitForm: SubmitFormFunction}) {
-  const [ingredient, setIngredient] = React.useState('');
+interface FormProps {
+  submitForm: SubmitFormFunction;
+}
+
+export default function Form({ submitForm } : FormProps) {
+  const [ ingredient, setIngredient ] = React.useState('');
 
   const onFormSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();

@@ -1,0 +1,1 @@
+export const ITEMS_QUANTITY_TO_FETCH: number = 100;

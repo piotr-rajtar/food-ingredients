@@ -1,33 +1,64 @@
-import React from "react"
-import Head from 'next/head'
+import React from 'react';
+import Head from 'next/head';
+import axios from 'axios';
+import { v4 } from 'uuid';
 
-import styles from '../styles/Home.module.scss'
-import {  SearchHistoryRecord, SubmitFormFunction } from '../typings'
+import styles from '../styles/Home.module.scss';
+import {  IngredientRecord, SearchHistoryRecord, SubmitFormFunction } from '../typings';
+import { createQueryString } from '../utils';
+import { ITEMS_QUANTITY_TO_FETCH } from '../const';
 
-import CardsList from '../components/cards/cardsList'
-import Form from '../components/form/form'
-import SearchHistoryList from '../components/searchHistory/searchHistoryList'
+import CardsList from '../components/cards/cardsList';
+import Form from '../components/form/form';
+import SearchHistoryList from '../components/searchHistory/searchHistoryList';
 
 export default function Home() {
   const [searchHistoryList, setSearchHistoryList] = React.useState([] as SearchHistoryRecord[]);
+  const [cardsList, setCardsList] = React.useState([] as IngredientRecord[]);
 
   const addNewSearchHistoryItem = (ingredient: string): void => {
     const newSearchItem: SearchHistoryRecord = {
-      id: searchHistoryList.length,
+      id: v4(),
       searchedPhrase: ingredient,
     }
-    const newSearchHistoryList: SearchHistoryRecord[] = [
-      ...structuredClone(searchHistoryList),
-      newSearchItem
-    ]
-    setSearchHistoryList(newSearchHistoryList);
+
+    const clonedSearchHistoryList: SearchHistoryRecord[] = structuredClone(searchHistoryList);
+
+    if(searchHistoryList.length === 10) {
+      clonedSearchHistoryList.pop();
+    }
+
+    const updatedSearchHistoryList: SearchHistoryRecord[] = [
+      newSearchItem,
+      ...clonedSearchHistoryList,
+    ];
+    setSearchHistoryList(updatedSearchHistoryList);
+  }
+
+  const fetchData = async (ingredient: string): Promise<void> => {
+    const queryString: string = createQueryString({ query: ingredient, number: ITEMS_QUANTITY_TO_FETCH });
+    const storedQueryResult: string | null = localStorage.getItem(queryString);
+
+    if(storedQueryResult) {
+      const parsedStoredQueryResult = JSON.parse(storedQueryResult);
+      setCardsList(parsedStoredQueryResult);
+      return;
+    }
+
+    try {
+      const result = await axios.get(`https://api.spoonacular.com/food/ingredients/search?apiKey=${process.env.NEXT_PUBLIC_API_KEY}&${queryString}`);
+      setCardsList(result.data.results);
+      localStorage.setItem(queryString, JSON.stringify(result.data.results));
+    } catch(error) {
+      setCardsList([]);
+      console.error(`Error: ${error}`);
+      return;
+    }
   }
 
   const submitForm: SubmitFormFunction = (ingredient: string): void => {
-    //TODO: API REQUEST
-    //TODO: CREATE AND MEMOIZE QUERY STRING
-    //TODO: CORRECT SEARCH ITEM INTERFACE
     addNewSearchHistoryItem(ingredient);
+    fetchData(ingredient);
   };
   
   return (
@@ -45,9 +76,9 @@ export default function Home() {
 
         <Form submitForm={submitForm} />
 
-        <SearchHistoryList searchHistoryList={searchHistoryList} />
+        <SearchHistoryList searchHistoryList={searchHistoryList} onItemClick={fetchData} />
 
-        <CardsList />
+        <CardsList cardsList={cardsList} />
       </main>
     </div>
   )

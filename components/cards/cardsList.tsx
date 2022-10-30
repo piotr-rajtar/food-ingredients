@@ -1,15 +1,24 @@
-import { UnorderedList } from '@chakra-ui/react'
+import { UnorderedList } from '@chakra-ui/react';
 
-import styles from './cardsList.module.scss'
+import styles from './cardsList.module.scss';
+import { IngredientRecord } from '../../typings';
 
-import Card from './card'
+import Card from './card';
 
-export default function CardsList() {
+interface CardListProps {
+  cardsList: IngredientRecord[];
+}
+
+export default function CardsList({ cardsList } : CardListProps) {
   return (
     <section>
       <h2>CARDS LIST:</h2>
       <UnorderedList>
-        <Card />
+        {
+          cardsList.map((card) => (
+            <Card key={card.id} card={card} />
+          ))
+        }
       </UnorderedList>
     </section>
   )

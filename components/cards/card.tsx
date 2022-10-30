@@ -1,12 +1,21 @@
-import { Image, ListItem, Text } from '@chakra-ui/react'
+import { Image, ListItem, Text } from '@chakra-ui/react';
 
-import styles from './card.module.scss'
+import styles from './card.module.scss';
+import { ImageSize, IngredientRecord } from '../../typings';
+import { createImageUrl } from '../../utils';
 
-export default function Card() {
+interface CardProps {
+  card: IngredientRecord;
+}
+
+export default function Card({ card } : CardProps) {
+  const imageAlternativeText: string = `${card.name} alternative`;
+  const imageSource: string = createImageUrl(card.image, ImageSize.SMALL);
+
   return (
     <ListItem>
-      <Image alt='ingredient alt' />
-      <Text>Ingredient title</Text>
+      <Image alt={imageAlternativeText} src={imageSource} />
+      <Text>{ card.name }</Text>
     </ListItem>
   )
 }
