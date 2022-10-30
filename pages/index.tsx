@@ -2,6 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import axios from 'axios';
 import { v4 } from 'uuid';
+import { Heading } from '@chakra-ui/react'
 
 import styles from '../styles/Home.module.scss';
 import {  IngredientRecord, SearchHistoryRecord, SubmitFormFunction } from '../typings';
@@ -69,10 +70,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
+      <main>
+        <Heading className={styles.title} as='h1' size='2xl'>
           Welcome to Food Ingredient Explorer!
-        </h1>
+        </Heading>
 
         <Form submitForm={submitForm} />
 

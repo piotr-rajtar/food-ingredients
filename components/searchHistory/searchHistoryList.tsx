@@ -1,4 +1,4 @@
-import { OrderedList } from '@chakra-ui/react';
+import { Heading, OrderedList } from '@chakra-ui/react';
 
 import styles from './searchHistoryList.module.scss';
 import { SearchHistoryRecord } from '../../typings';
@@ -12,8 +12,8 @@ interface SearchHistoryListProps {
 
 export default function SearchHistoryList({ searchHistoryList, onItemClick } : SearchHistoryListProps) {
   return (
-    <section>
-      <h2>SEARCH HISTORY:</h2>
+    <section className={styles.section}>
+      <Heading className={styles['section-subtitle']} as='h2' size='lg'>SEARCH HISTORY:</Heading>
       <OrderedList>
         {
           searchHistoryList.map((searchHistoryItem) => (

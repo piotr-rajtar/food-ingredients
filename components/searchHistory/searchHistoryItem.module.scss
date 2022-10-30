@@ -1,0 +1,8 @@
+@import '../../styles/variables.scss';
+
+.item {
+    padding: 2 * $spacing-unit;
+    font-size: $search-history-items-font-size;
+    cursor: pointer;
+    width:fit-content;
+}

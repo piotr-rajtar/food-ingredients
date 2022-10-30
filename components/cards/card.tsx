@@ -13,9 +13,9 @@ export default function Card({ card } : CardProps) {
   const imageSource: string = createImageUrl(card.image, ImageSize.SMALL);
 
   return (
-    <ListItem>
-      <Image alt={imageAlternativeText} src={imageSource} />
-      <Text>{ card.name }</Text>
+    <ListItem className={styles.item}>
+      <Image alt={imageAlternativeText} className={styles.img} src={imageSource} />
+      <Text className={styles.text}>{ card.name }</Text>
     </ListItem>
   )
 }

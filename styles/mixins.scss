@@ -1,0 +1,11 @@
+@import './variables.scss';
+
+@mixin section {
+  margin-bottom: 10 * $spacing-unit;
+  width: 100%;
+}
+
+@mixin section-subtitle {
+  margin-bottom: 5 * $spacing-unit;
+}
+

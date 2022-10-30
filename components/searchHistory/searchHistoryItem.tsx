@@ -9,6 +9,11 @@ interface SearchHistoryItemProps {
 
 export default function SearchHistoryItem({ children, onItemClick } : SearchHistoryItemProps) {
   return (
-    <ListItem onClick={_event => onItemClick(children as string)}>{ children }</ListItem>
+    <ListItem 
+      className={styles.item} 
+      onClick={_event => onItemClick(children as string)}
+    >
+      { children }
+    </ListItem>
   )
 }

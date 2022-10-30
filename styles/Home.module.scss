@@ -1,1 +1,12 @@
+@import './variables.scss';
 
+.container {
+  padding: 6 * $spacing-unit;
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 15 * $spacing-unit;
+}

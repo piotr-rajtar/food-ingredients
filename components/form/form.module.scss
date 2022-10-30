@@ -1,0 +1,28 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.section {
+  @include section;
+}
+
+.section-subtitle {
+  @include section-subtitle;
+}
+
+.label {
+  font-size: $label-font-size;
+}
+
+.input {
+  margin-block: 3 * $spacing-unit;
+}
+
+.button {
+  width: 400px;
+  margin: 0 auto;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
